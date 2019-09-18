@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-/*	
+/*
  *	@author 	: Nicodemus Karisa
  *	date		: 6th June, 2018
  *	AFR Staff Recognition system
@@ -34,12 +34,12 @@ class Login extends CI_Controller {
         }elseif($this->session->first_login_attempt){
         	redirect(base_url() . 'account/manage_profile', 'refresh');
         }
-        	
+
 
         $this->load->view('backend/login');
     }
 
-    //Ajax login function 
+    //Ajax login function
     function ajax_login() {
         $response = array();
 
@@ -62,30 +62,30 @@ class Login extends CI_Controller {
 	function create_user_session ($row,$first_login_attempt = false){
 			//$row = $query->row();
 			$role = $this->db->get_where("role",array("role_id"=>$row->role_id))->row();
-			
+
 		    $this->session->set_userdata('user_login', '1');
 		    $this->session->set_userdata('login_user_id', $row->user_id);
 		    $this->session->set_userdata('name', $row->firstname);
 			$this->session->set_userdata('login_type', $role->name);
-			$this->session->set_userdata('role_name', $role->name);	
+			$this->session->set_userdata('role_name', $role->name);
 			$this->session->set_userdata('profile_id', $row->profile_id);
-			$this->session->set_userdata('manager_id', $row->manager_id);	
-			$this->session->set_userdata('country_id', $row->country_id);	
-			$this->session->set_userdata('role_id', $row->role_id);	
+			$this->session->set_userdata('manager_id', $row->manager_id);
+			$this->session->set_userdata('country_id', $row->country_id);
+			$this->session->set_userdata('role_id', $row->role_id);
 			$this->session->set_userdata('staff_position', $role->contribution);
 			$this->session->set_userdata('staff_position_name', $this->crud_model->get_type_name_by_id('contribution',$role->contribution));
 			$this->session->set_userdata('department_id', $role->department_id);
 			$this->session->set_userdata('department_name', $this->crud_model->get_type_name_by_id('department',$role->department_id));
 			$this->session->set_userdata('profile_name', $this->crud_model->get_type_name_by_id('profile',$row->profile_id));
-			$this->session->set_userdata('country_name',$this->crud_model->get_type_name_by_id("country",$row->country_id));			
-			
+			$this->session->set_userdata('country_name',$this->crud_model->get_type_name_by_id("country",$row->country_id));
+
 			$this->session->set_userdata('manage_staff_in_your_country', $row->manage_staff_in_your_country);
 			$this->session->set_userdata('vote_all_in_user_scope',$role->vote_all_in_user_scope);
 			$this->session->set_userdata('last_line_manager',$role->last_line_manager);
-			$this->session->set_userdata('is_bt_role', $row->is_bt_role);	
-			
+			$this->session->set_userdata('is_bt_role', $row->is_bt_role);
+
 			$this->session->set_userdata('first_login_attempt',$first_login_attempt);
-			
+
 			return 'success';
 	}
     //Validating login from ajax request
@@ -95,28 +95,28 @@ class Login extends CI_Controller {
 
         // Checking login credential for admin
         $query = $this->db->get_where('user', $credential);
-		
+
         if ($query->num_rows() > 0) {
 			$row = $query->row();
-		  	return $this->create_user_session($row); 
-						
+		  	return $this->create_user_session($row);
+
         }else{
-        	
+
 			$split_email = explode("@", $email);
-			
+
         	$query = $this->db->get_where('user', array('email'=>$email,'first_login_attempt'=>1));
-			
+
 			if($query->num_rows() > 0 && strtolower($split_email[0]) == strtolower($password)){
 				$row = $query->row();
-				return $this->create_user_session($row,true);		
+				return $this->create_user_session($row,true);
 			}
         }
-       
+
 		/**
-		 * If the if conditions above are not met, the method returns invalid back to the calling 
+		 * If the if conditions above are not met, the method returns invalid back to the calling
 		 * ajax method bound to the key $login_status = invalid
 		 * Invalid success returns to the login page.
-		 **/ 
+		 **/
         return 'invalid';
     }
 
@@ -139,19 +139,19 @@ class Login extends CI_Controller {
         $email                  = $_POST["email"];
         //$reset_account_type     = '';
         //resetting user password here
-        $new_password           =   substr( md5( rand(100000000,20000000000) ) , 0,7);
+        $new_password           =   substr( md5( rand(100000,200000) ) , 0,7);
 
         // Checking credential for user
         $query = $this->db->get_where('user' , array('email' => $email));
-        if ($query->num_rows() > 0) 
+        if ($query->num_rows() > 0)
         {
             $this->db->where('email' , $email);
             $this->db->update('user' , array('password' => md5($new_password)));
             $resp['status']         = 'true';
         }
-       
 
-        // send new password to user email  
+
+        // send new password to user email
         //$this->email_model->password_reset_email($new_password , $email);
         $this->email_model->manage_account_email($query->row()->user_id,"password_reset",true,$new_password);
 
