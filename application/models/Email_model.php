@@ -225,6 +225,8 @@ class Email_model extends CI_Model {
 	        $config['protocol']		= "smtp";
 	        $config['smtp_host']	= "10.8.1.127";
 	        $config['smtp_port']	= "25";
+					$config['smtp_user']	= "RecognitionScheme@us.ci.org";
+					$config['smtp_pass']	= "@Compassion2019";
 	        $config['mailtype']		= 'html';
 	        $config['charset']		= 'utf-8';
 	        $config['newline']		= "\r\n";
