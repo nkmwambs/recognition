@@ -223,7 +223,7 @@ class Email_model extends CI_Model {
 	        $config['useragent']	= "CodeIgniter";
 	        $config['mailpath']		= "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
 	        $config['protocol']		= "smtp";
-	        $config['smtp_host']	= "localhost";
+	        $config['smtp_host']	= "10.8.1.127";
 	        $config['smtp_port']	= "25";
 	        $config['mailtype']		= 'html';
 	        $config['charset']		= 'utf-8';
