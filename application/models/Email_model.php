@@ -1,5 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 class Email_model extends CI_Model {
 
 	private $to = "";
@@ -20,7 +22,7 @@ class Email_model extends CI_Model {
 	function account_opening_email($account_type = '' , $email = '', $fsockopen = true)
 	{
 		$system_name	=	$this->db->get_where('settings' , array('type' => 'system_name'))->row()->description;
-		$query			=	$this->db->get_where(users , array('email' => $email));
+		$query			=	$this->db->get_where('user' , array('email' => $email));
 
 		$email_msg		=	"Dear ".$query->row()->firstname.",<br />";
 		$email_msg		.=	"Welcome to ".$system_name."<br />";
@@ -38,7 +40,7 @@ class Email_model extends CI_Model {
 
 	function password_reset_email($new_password = '' , $email = '' , $fsockopen = true)
 	{
-		$query			=	$this->db->get_where(user , array('email' => $email));
+		$query			=	$this->db->get_where('user' , array('email' => $email));
 		if($query->num_rows() > 0)
 		{
 
@@ -219,50 +221,66 @@ class Email_model extends CI_Model {
 	/***custom email sender****/
 	function do_email()
 	{
-			/**$config = array();
-	        $config['useragent']	= "CodeIgniter";
-	        $config['mailpath']		= "/usr/bin/sendmail"; // or "/usr/sbin/sendmail"
-	        $config['protocol']		= "smtp";
-	        $config['smtp_host']	= "10.8.1.127";
-	        $config['smtp_port']	= "25";
-					$config['smtp_user']	= "RecognitionScheme@us.ci.org";
-					$config['smtp_pass']	= "@Compassion2019";
-	        $config['mailtype']		= 'html';
-	        $config['charset']		= 'utf-8';
-	        $config['newline']		= "\r\n";
-	        $config['wordwrap']		= TRUE;**/
-			
-			$config = array();
+		  
+			// $config = array();
 
-			$config['mailpath'] = '/usr/sbin/sendmail';
-			$config['protocol']='smtp';
-			$config['smtp_host']='email-smtp.eu-west-1.amazonaws.com';
-			$config['smtp_port']='587';
-			$config['smtp_timeout']='30';
-			$config['smtp_user']='AKIAXRNTNANX64YFBHFJ';
-			$config['smtp_pass']='BKoqJsfKLUpN2IiHnzhuFQEyX98hlHJ9Frg7QMvZDmco';
-			$config['charset']='utf-8';
-			$config['newline']="\r\n";
-			$config['wordwrap'] = TRUE;
-			$config['mailtype'] = 'html';
+			// $config['mailpath'] = '/usr/sbin/sendmail';
+			// $config['protocol']='smtp';
+			// $config['smtp_host']='email-smtp.eu-west-1.amazonaws.com';
+			// $config['smtp_port']='587';
+			// $config['smtp_timeout']='30';
+			// $config['smtp_user']='AKIAXRNTNANX64YFBHFJ';
+			// $config['smtp_pass']='BKoqJsfKLUpN2IiHnzhuFQEyX98hlHJ9Frg7QMvZDmco';
+			// $config['charset']='utf-8';
+			// $config['newline']="\r\n";
+			// $config['wordwrap'] = TRUE;
+			// $config['mailtype'] = 'html';
 
-	        $this->load->library('email');
+	        // $this->load->library('email');
 
-	        $this->email->initialize($config);
+	        // $this->email->initialize($config);
+
+
+			require 'vendor/autoload.php';
+
+
+			$mail = new PHPMailer();
+
+			try {
+
+
+			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
 
 			$system_name	=	$this->db->get_where('settings' , array('type' => 'system_name'))->row()->description;
 
-			$this->email->from($this->from, $system_name);
-			//$this->email->from($from, $system_name);
-			$this->email->to($this->to);
-			$this->email->subject($this->sub);
+			$mail->isSMTP();                                            //Send using SMTP
+			$mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
+			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+			$mail->Username   = 'afrstaffrecognition@ke.ci.org';                   //SMTP username
 
-			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
-			$this->email->message($msg);
+			$mail->Password   =$this->config->item('office365_smtp_pass');     
+			                         //SMTP password
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+		
+			//Recipients
+			$mail->setFrom($this->from, $system_name);
+            $mail->addAddress($this->to);
 
-			$this->email->send();
+			
+			//Content
+			$mail->isHTML(true);                                  //Set email format to HTML
+			$mail->Subject = $this->sub;
+			$mail->Body    = $msg;
+			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+		
+			$mail->send();
 
 			return "Mail Sent";//echo $this->email->print_debugger();
+			
+		} catch (Exception $e) {
+			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		}
 
 	}
 

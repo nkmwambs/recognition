@@ -3,7 +3,9 @@
     "description": "This is a staff nomination project used across the Africa Region to nominate the best staff of the year based on HR defined categories",
     "type": "project",
     "require": {
-        "simplesamlphp/simplesamlphp": "^1.17"
+        "simplesamlphp/simplesamlphp": "^1.17",
+        "phpmailer/phpmailer": "^6.5"
+
     },
     "authors": [
         {
@@ -17,16 +19,7 @@
         "phpunit/phpunit": "^5.0",
         "satooshi/php-coveralls": "^1.0"
     },
-   "autoload": {
-        "psr-4": {
-            "Base32\\": "application/libraries"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Base32\\": "tests/"
-        }
-    },
+  
     "extra": {
         "branch-alias": {
             "dev-master": "1.1.x-dev"
