@@ -2778,13 +2778,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				case 'invisible':
 					unset($this->add_fields[$field_num]);
 					unset($fields[$field_num]);
-					continue;
+					continue 2;
 				break;
 				case 'hidden':
 					$this->add_hidden_fields[] = $field_input;
 					unset($this->add_fields[$field_num]);
 					unset($fields[$field_num]);
-					continue;
+					continue 2;
 				break;
 			}
 
@@ -2821,13 +2821,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 				case 'invisible':
 					unset($this->edit_fields[$field_num]);
 					unset($fields[$field_num]);
-					continue;
+					continue 2;
 				break;
 				case 'hidden':
 					$this->edit_hidden_fields[] = $field_input;
 					unset($this->edit_fields[$field_num]);
 					unset($fields[$field_num]);
-					continue;
+					continue 2;
 				break;
 			}
 
@@ -2879,13 +2879,13 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 			    case 'invisible':
 			    	unset($this->read_fields[$field_num]);
 			    	unset($fields[$field_num]);
-			    	continue;
+			    	continue 2;
 			    	break;
 			    case 'hidden':
 			    	$this->read_hidden_fields[] = $field_input;
 			    	unset($this->read_fields[$field_num]);
 			    	unset($fields[$field_num]);
-			    	continue;
+			    	continue 2;
 			    	break;
 			}
 
