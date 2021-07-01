@@ -1,6 +1,10 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+	//use PHPMailer\PHPMailer\PHPMailer;
+
+	use PHPMailer\PHPMailer\PHPMailer;
+	require APPPATH.'vendor/autoload.php';
 
 /*
  *	@author 	: Nicodemus Karisa
@@ -683,10 +687,57 @@ class Surveys extends CI_Controller
 
     return true;
   }
+  public function do_email($to_emails, $reciever_name=''){
+	
 
+	$mail = new PHPMailer();
+
+	try {
+		//Server settings
+		//$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+		$mail->isSMTP();                                            //Send using SMTP
+		$mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
+		$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+		$mail->Username   = 'afrstaffrecognition@ke.ci.org';//'gtsafrdevteam';                     //SMTP username
+		$mail->Password   = 'Comp@ss1on@321!!@**@';//'@Compassion123';                               //SMTP password
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+		$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+	
+		//Recipients
+		$mail->setFrom('afrstaffrecognition@ke.ci.org', 'Mailer');
+		$mail->addAddress($to_emails,$reciever_name);
+		// $mail->addAddress('livingstoneonduso@gmail.com', 'Onduso');     //Add a recipient
+		// $mail->addAddress('londuso@ke.ci.org');   //Name is optional
+		// $mail->addAddress('nkmwambs@gmail.com'); //Name is optional
+		// $mail->addAddress('nkarisa@ke.ci.org');    //Name is optional
+		// $mail->addAddress('jmuchori@ke.ci.org'); //Name is optional
+		// $mail->addAddress('gkimani@ke.ci.org');  //Name is optional
+		//$mail->addReplyTo('info@example.com', 'Information');
+		//$mail->addCC('cc@example.com');
+		//$mail->addBCC('bcc@example.com');
+	
+		//Attachments
+		//$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+	
+		//Content
+		$mail->isHTML(true);                                  //Set email format to HTML
+		$mail->Subject = 'Testing PhpMailer';
+		$mail->Body    = 'Recieve EMAIL From <b>Amazon Web Services</b>';
+		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+	
+		$mail->send();
+		echo 'Message has been sent';
+	} catch (Exception $e) {
+		echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+	}
+
+}
 	public function nominate($param1="",$param2="",$param3=""){
 		if ($this->session->userdata('user_login') != 1)
             redirect(base_url(), 'refresh');
+
+		$this->do_email('londuso@ke.ci.org');
 
 
 		$msg = get_phrase("success");
