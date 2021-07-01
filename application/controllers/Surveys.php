@@ -3,8 +3,6 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 	//use PHPMailer\PHPMailer\PHPMailer;
 
-	use PHPMailer\PHPMailer\PHPMailer;
-	require APPPATH.'vendor/autoload.php';
 
 /*
  *	@author 	: Nicodemus Karisa
