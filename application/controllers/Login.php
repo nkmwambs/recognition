@@ -206,7 +206,7 @@ class Login extends CI_Controller {
     function logout() {
       if($this->session->sso_login == 1){
         $this->session->sess_destroy();
-        redirect('https://dev-585368.okta.com', 'refresh');
+        redirect('https://compassion.okta.com/', 'refresh');
       }else{
         $this->session->sess_destroy();
         $this->session->set_flashdata('logout_notification', 'logged_out');
