@@ -362,7 +362,6 @@ class Surveys extends CI_Controller
 		/**Callbacks**/
 		$crud->callback_after_insert(array($this,'insert_survey_audit_parameters'));
 		$crud->callback_after_update(array($this,'update_survey_audit_parameters'));
-		$all_active_surveys = $this->db->get_where("survey",array("status"=>"1"))->num_rows();
 
 		$crud->callback_insert(array($this,'survey_check_on_insert'));
 		$crud->callback_update(array($this,"survey_check_on_update"));
@@ -382,6 +381,7 @@ class Surveys extends CI_Controller
 
 		$output = $crud->render();
 		$page_data['view_type']  = "surveys";
+		$page_data['post']=$_POST;
 		$page_data['page_name']  = __FUNCTION__;
         $page_data['page_title'] = get_phrase(__FUNCTION__);
 		$output = array_merge($page_data,(array)$output);
@@ -529,7 +529,6 @@ class Surveys extends CI_Controller
       		$post_array['start_date'] = date("Y-m-d",strtotime($post_array['start_date']));
       		$post_array['end_date'] = date("Y-m-d",strtotime($post_array['end_date']));
 
-			  print_r($post_array);
 			$this->db->insert("survey",$post_array);
 			//$this->email_model->send_batch_emails('survey_invite');
 		}else{
