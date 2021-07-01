@@ -381,7 +381,6 @@ class Surveys extends CI_Controller
 
 		$output = $crud->render();
 		$page_data['view_type']  = "surveys";
-		$page_data['post']=$_POST;
 		$page_data['page_name']  = __FUNCTION__;
         $page_data['page_title'] = get_phrase(__FUNCTION__);
 		$output = array_merge($page_data,(array)$output);
