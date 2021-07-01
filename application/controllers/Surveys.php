@@ -522,6 +522,8 @@ class Surveys extends CI_Controller
 	function survey_check_on_insert($post_array){
 		$all_active_surveys = $this->db->get_where("survey",array("status"=>"1"))->num_rows();
 
+		print_r($all_active_surveys) ;
+		exit;
 		if($all_active_surveys == 0){
       		$post_array['start_date'] = date("Y-m-d",strtotime($post_array['start_date']));
       		$post_array['end_date'] = date("Y-m-d",strtotime($post_array['end_date']));
