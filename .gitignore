@@ -1,0 +1,7 @@
+.*
+!.gitignore
+/application/**/config.php
+/application/**/database.php
+/application/**/sso.php
+vendor
+index.php
