@@ -581,7 +581,7 @@ class Surveys extends CI_Controller
 
 		$this->db->insert('survey',$data);
 
-		$message=$this->db->affected_rows() != 1 ? 'false' : 'true';
+		$message=$this->db->affected_rows() == 1 ? 'true' : 'false';
 
 		
 		if(!$this->db->error()){
