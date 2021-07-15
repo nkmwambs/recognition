@@ -584,7 +584,7 @@ class Surveys extends CI_Controller
 		$message=$this->db->affected_rows() == 1 ? 'true' : 'false';
 
 		
-		if(!$this->db->error()){
+		if($this->db->error()){
 
 			$message='Db error';
 		}
