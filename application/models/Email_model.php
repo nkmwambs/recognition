@@ -276,10 +276,10 @@ class Email_model extends CI_Model {
 		
 			$mail->send();
 
-			//return "Mail Sent";
+			return "Mail Sent";
 			
-			echo $this->email->print_debugger();
-			exit();
+			// echo $this->$mail->print_debugger();
+			// exit();
 			
 		} catch (Exception $e) {
 			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
