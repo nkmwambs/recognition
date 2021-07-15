@@ -571,7 +571,7 @@ class Surveys extends CI_Controller
 
 		
 
-	    $message = get_phrase('account_linked_successfully');
+	    $message = '';//get_phrase('account_linked_successfully');
 
 		$data['start_date']  = $this->input->post('start_date');
 		$data['end_date']  = $this->input->post('end_date');
@@ -581,8 +581,9 @@ class Surveys extends CI_Controller
 
 		$this->db->insert('survey',$data);
 
+		$message=$this->db->affected_rows() != 1 ? 'false' : 'true';
 
-		echo json_encode($message);
+		echo $message;
 
 	
 	}
