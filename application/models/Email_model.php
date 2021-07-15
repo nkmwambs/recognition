@@ -246,7 +246,7 @@ class Email_model extends CI_Model {
 
 			$mail = new PHPMailer();
 
-			try {
+			//try {
 
 
 			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
@@ -276,14 +276,14 @@ class Email_model extends CI_Model {
 		
 			$mail->send();
 
-			//return "Mail Sent";
+			return "Mail Sent";
 			
-			echo $this->email->print_debugger();
-			exit();
+			// echo $this->$mail->print_debugger();
+			// exit();
 			
-		} catch (Exception $e) {
-			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-		}
+		// } catch (Exception $e) {
+		// 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		// }
 
 	}
 
