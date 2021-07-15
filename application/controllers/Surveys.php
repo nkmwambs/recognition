@@ -583,7 +583,11 @@ class Surveys extends CI_Controller
 
 		$message=$this->db->affected_rows() != 1 ? 'false' : 'true';
 
-		echo $message;
+		if($message=='false'){
+			$message=$this->db->error(); 
+		}
+
+		echo json_encode($message);
 
 	
 	}
