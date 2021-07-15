@@ -540,7 +540,7 @@ class Surveys extends CI_Controller
 
 			$this->db->insert("survey",$post_array);
 
-			//$this->email_model->send_batch_emails('survey_invite');
+			$this->email_model->send_batch_emails('survey_invite');
 		}else{
       		return false;
     	}
