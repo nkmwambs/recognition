@@ -536,8 +536,8 @@ class Surveys extends CI_Controller
       		$post_array['start_date'] = date("Y-m-d",strtotime($post_array['start_date']));
       		$post_array['end_date'] = date("Y-m-d",strtotime($post_array['end_date']));
 
-			  var_dump($post_array);
-			  exit();
+			$post_array['created_by']=1;
+
 			$this->db->insert("survey",$post_array);
 
 			//$this->email_model->send_batch_emails('survey_invite');
