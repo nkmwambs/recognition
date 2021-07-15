@@ -364,6 +364,7 @@ class Surveys extends CI_Controller
 		$crud->callback_after_update(array($this,'update_survey_audit_parameters'));
 
 		$crud->callback_insert(array($this,'survey_check_on_insert'));
+		//print_r($_POST); 
 		$crud->callback_update(array($this,"survey_check_on_update"));
     	$crud->callback_delete(array($this,"survey_check_on_delete"));
     	$crud->callback_column('votes',array($this,'count_of_votes_survey'));
@@ -385,6 +386,11 @@ class Surveys extends CI_Controller
         $page_data['page_title'] = get_phrase(__FUNCTION__);
 		$output = array_merge($page_data,(array)$output);
         $this->load->view('backend/index', $output);
+
+
+		
+
+
 	}
 
   function change_survey_status($primary_key , $row){
@@ -523,13 +529,17 @@ class Surveys extends CI_Controller
 
 	function survey_check_on_insert($post_array){
 		$all_active_surveys = $this->db->get_where("survey",array("status"=>"1"))->num_rows();
-//print_r($all_active_surveys); exit;
+
+	
 
 		if($all_active_surveys == 0){
       		$post_array['start_date'] = date("Y-m-d",strtotime($post_array['start_date']));
       		$post_array['end_date'] = date("Y-m-d",strtotime($post_array['end_date']));
 
-			$this->db->insert("surveytttt",$post_array);
+			$post_array['created_by']=1;
+
+			$this->db->insert("survey",$post_array);
+
 			//$this->email_model->send_batch_emails('survey_invite');
 		}else{
       		return false;
