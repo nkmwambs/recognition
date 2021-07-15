@@ -323,72 +323,91 @@ class Surveys extends CI_Controller
             redirect(base_url(), 'refresh');
 
 		/**Instatiate CRUD**/
-		$crud = new grocery_CRUD();
+		// $crud = new grocery_CRUD();
 
-		/**Set theme to flexigrid**/
-		$crud->set_theme('datatables');//flexigrid
-
-
-		/** Grid Subject **/
-		$crud->set_subject(get_phrase('survey'));
-
-		/**Select Category Table**/
-		$crud->set_table('survey');
+		// /**Set theme to flexigrid**/
+		// $crud->set_theme('datatables');//flexigrid
 
 
-		/** Related Tables to Category **/
-		$crud->set_relation('country_id','country','name');
-		$crud->set_relation('created_by','user','firstname');
-		$crud->set_relation('last_modified_by','user','firstname');
+		// /** Grid Subject **/
+		// $crud->set_subject(get_phrase('survey'));
 
-		/** Populate Status/Allow User Edit Type **/
-		$crud->field_type('status', 'dropdown',array('0'=>"inactive","1"=>"active"));
-    	$crud->field_type('allow_user_edit', 'dropdown',array('0'=>"no","1"=>"yes"));
-		$crud->field_type('action_on_active_votes', 'dropdown',array('0'=>get_phrase('no_action'),"1"=>get_phrase('force_delete'),"2"=>get_phrase("force_submit")));
-
-		/**Select Fields to Show in the Grid **/
-		$crud->columns(array('start_date','end_date','country_id',"allow_user_edit","action_on_active_votes",'status'));
-
-		/** Show add/edit fields**/
-		$crud->fields(array('start_date','end_date','allow_user_edit','action_on_active_votes','status'));
+		// /**Select Category Table**/
+		// $crud->set_table('survey');
 
 
-		/** Set required fields **/
-		$crud->required_fields(array('start_date','end_date','country_id','allow_user_edit','action_on_active_votes','status'));
+		// /** Related Tables to Category **/
+		// $crud->set_relation('country_id','country','name');
+		// $crud->set_relation('created_by','user','firstname');
+		// $crud->set_relation('last_modified_by','user','firstname');
 
-		/** Set Field Label **/
-		$crud->display_as("country_id",get_phrase("country"));
+		// /** Populate Status/Allow User Edit Type **/
+		// $crud->field_type('status', 'dropdown',array('0'=>"inactive","1"=>"active"));
+    	// $crud->field_type('allow_user_edit', 'dropdown',array('0'=>"no","1"=>"yes"));
+		// $crud->field_type('action_on_active_votes', 'dropdown',array('0'=>get_phrase('no_action'),"1"=>get_phrase('force_delete'),"2"=>get_phrase("force_submit")));
 
-		/**Callbacks**/
-		$crud->callback_after_insert(array($this,'insert_survey_audit_parameters'));
-		$crud->callback_after_update(array($this,'update_survey_audit_parameters'));
+		// /**Select Fields to Show in the Grid **/
+		// $crud->columns(array('start_date','end_date','country_id',"allow_user_edit","action_on_active_votes",'status'));
 
-		$crud->callback_insert(array($this,'survey_check_on_insert'));
-		//print_r($_POST); 
-		$crud->callback_update(array($this,"survey_check_on_update"));
-    	$crud->callback_delete(array($this,"survey_check_on_delete"));
-    	$crud->callback_column('votes',array($this,'count_of_votes_survey'));
-
-		/** Assign Privileges **/
-		//if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"survey_status")) $crud->add_action(get_phrase('change_status'), '', '', 'ui-icon-shuffle',array($this,'change_survey_status'));
-		if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"add_survey")) $crud->unset_add();
-		if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"edit_survey")) $crud->unset_edit();
-		if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"delete_survey")) $crud->unset_delete();
-		if($this->crud_model->check_profile_privilege($this->session->profile_id,"survey_results")) $crud->add_action(get_phrase('results'), '', '', 'ui-icon-folder-open',array($this,'show_nomination_results'));
-
-		/**Remove the view button**/
-		$crud->unset_read();
+		// /** Show add/edit fields**/
+		// $crud->fields(array('start_date','end_date','allow_user_edit','action_on_active_votes','status'));
 
 
-		$output = $crud->render();
+		// /** Set required fields **/
+		// $crud->required_fields(array('start_date','end_date','country_id','allow_user_edit','action_on_active_votes','status'));
+
+		// /** Set Field Label **/
+		// $crud->display_as("country_id",get_phrase("country"));
+
+		// /**Callbacks**/
+		// $crud->callback_after_insert(array($this,'insert_survey_audit_parameters'));
+		// $crud->callback_after_update(array($this,'update_survey_audit_parameters'));
+
+		// $crud->callback_insert(array($this,'survey_check_on_insert'));
+		// //print_r($_POST); 
+		// $crud->callback_update(array($this,"survey_check_on_update"));
+    	// $crud->callback_delete(array($this,"survey_check_on_delete"));
+    	// $crud->callback_column('votes',array($this,'count_of_votes_survey'));
+
+		// /** Assign Privileges **/
+		// //if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"survey_status")) $crud->add_action(get_phrase('change_status'), '', '', 'ui-icon-shuffle',array($this,'change_survey_status'));
+		// if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"add_survey")) $crud->unset_add();
+		// if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"edit_survey")) $crud->unset_edit();
+		// if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"delete_survey")) $crud->unset_delete();
+		// if($this->crud_model->check_profile_privilege($this->session->profile_id,"survey_results")) $crud->add_action(get_phrase('results'), '', '', 'ui-icon-folder-open',array($this,'show_nomination_results'));
+
+		// /**Remove the view button**/
+		// $crud->unset_read();
+
+
+		// $output = $crud->render();
+		// $page_data['view_type']  = "surveys";
+		// $page_data['page_name']  = __FUNCTION__;
+        // $page_data['page_title'] = get_phrase(__FUNCTION__);
+		// $output = array_merge($page_data,(array)$output);
+        // $this->load->view('backend/index', $output);
+
 		$page_data['view_type']  = "surveys";
 		$page_data['page_name']  = __FUNCTION__;
-        $page_data['page_title'] = get_phrase(__FUNCTION__);
-		$output = array_merge($page_data,(array)$output);
-        $this->load->view('backend/index', $output);
+		$page_data['page_title'] = get_phrase(__FUNCTION__);
+		$this->load->view('backend/index',$page_data);
 
 
-		
+	}
+
+
+	public function add_survey_setting(){
+		if ($this->session->userdata('user_login') != 1)
+            redirect(base_url(), 'refresh');
+
+			
+
+		$page_data['form_inputs']=$this->input->post();
+
+		$page_data['view_type']  = "surveys";
+		$page_data['page_name']  = "add_survey";
+		$page_data['page_title'] = get_phrase("add_survey");
+		$this->load->view('backend/index',$page_data);
 
 
 	}
@@ -536,8 +555,6 @@ class Surveys extends CI_Controller
       		$post_array['start_date'] = date("Y-m-d",strtotime($post_array['start_date']));
       		$post_array['end_date'] = date("Y-m-d",strtotime($post_array['end_date']));
 
-			  var_dump($post_array);
-			  exit();
 			$this->db->insert("survey",$post_array);
 
 			//$this->email_model->send_batch_emails('survey_invite');
@@ -545,6 +562,29 @@ class Surveys extends CI_Controller
       		return false;
     	}
 
+	}
+
+
+	///////////////////
+	function add_new_survey()
+	{
+
+		
+
+	    $message = get_phrase('account_linked_successfully');
+
+		$data['start_date']  = $this->input->post('start_date');
+		$data['end_date']  = $this->input->post('end_date');
+		$data['allow_user_edit']  = $this->input->post('allow_user_edit');
+		$data['action_on_active_votes']  = $this->input->post('action_on_active_votes');
+		$data['status']  = $this->input->post('status');
+
+		$this->db->insert('survey',$data);
+
+
+		echo json_encode($message);
+
+	
 	}
 
 	function send_survey_invitation(){
