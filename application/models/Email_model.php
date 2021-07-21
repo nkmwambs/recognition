@@ -268,7 +268,7 @@ class Email_model extends CI_Model {
 		
 				$this->db->insert('log_email_sent',$data);
 
-			};
+			}
 
 			//return "Mail Sent";
 
