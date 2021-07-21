@@ -257,9 +257,25 @@ class Email_model extends CI_Model {
 			$mail->Subject = $this->sub;
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		
-			$send=$mail->send();
+			$send='';
+			
+			if($mail->send()){
 
+				$send='Success';
+
+				
+
+			}else{
+				$send=$mail->ErrorInfo;
+
+			}
+
+			$data=array(
+				'email_send_to'=>$send,
+			);
+				
+	
+			$this->db->insert('log_email_sent',$data);
 			
 			// if($mail->send()){
 
@@ -279,12 +295,7 @@ class Email_model extends CI_Model {
 		} catch (Exception $e) {
 			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 
-			$data=array(
-				'email_send_to'=>$mail->ErrorInfo,
-			);
-				
-	
-			$this->db->insert('log_email_sent',$data);
+			
 			//$this->db->insert('log_email_sent',$mail->ErrorInfo);
 		}
 
