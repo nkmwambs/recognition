@@ -246,7 +246,8 @@ class Email_model extends CI_Model {
 			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 		
 			//Recipients
-			$mail->setFrom($this->from, $system_name);
+			//$mail->setFrom($this->from, $system_name);
+			$mail->setFrom($mail->Username, $system_name);
             $mail->addAddress($this->to);
 			//$mail->addAddress('londuso@ke.ci.org');
 
@@ -256,48 +257,10 @@ class Email_model extends CI_Model {
 			$mail->Subject = $this->sub;
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+ 
+			$mail->send();
 
-			//$mail->SMTPDebug = 1; 
-			$check=$mail->send();
-			// $send='Test';
-			
-			// if($check){
-			// 	$send='Success';
-			// 	$data=array(
-			// 		'email_send_to'=>$send,
-			// 	);
-					
-		
-			// 	$this->db->insert('log_email_sent',$data);	
-			// }
-			// else{
-			// 	$send=$error;
-
-			// 	$data=array(
-			// 		'email_send_to'=>$mail->ErrorInfo,
-			// 	);
-
-
-					
-		
-			// 	$this->db->insert('log_email_sent',$data);
-			// }
-
-			
-			
-			// if($mail->send()){
-
-				
-
-			// }
-
-			//return "Mail Sent";
-
-			  
-	
-
-			
-			// echo $this->$mail->print_debugger();
+			//$mail->print_debugger();
 			// exit();
 			
 		} catch (Exception $e) {
