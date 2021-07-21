@@ -225,8 +225,7 @@ class Email_model extends CI_Model {
 		
 
 			require 'vendor/autoload.php';
-
-
+			include_once('class.phpmailer.php');
 			$mail = new PHPMailer(true);
 
 			try {
@@ -301,17 +300,11 @@ class Email_model extends CI_Model {
 			// echo $this->$mail->print_debugger();
 			// exit();
 			
-		} catch (Exception $e) {
-			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-
-			$data=array(
-				'email_send_to'=>$mail->ErrorInfo,
-			);
-				
-	
-			$this->db->insert('log_email_sent',$data);
-			//$this->db->insert('log_email_sent',$mail->ErrorInfo);
-		}
+		} catch (phpmailerException $e) {
+			echo $e->errorMessage(); //error messages from PHPMailer
+		  } catch (Exception $e) {
+			echo $e->getMessage();
+		  }
 
 	}
 
