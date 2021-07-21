@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class Email_model extends CI_Model {
 
@@ -197,6 +198,7 @@ class Email_model extends CI_Model {
 		//Call return methods
 		if($fsockopen) {
 			if($user->email_notify == 1){
+				
 				return $this->do_email($user_id,$template_trigger);
 			}else{
 				return "Mail not sent. User switch notifications off";
@@ -221,30 +223,10 @@ class Email_model extends CI_Model {
 	/***custom email sender****/
 	function do_email()
 	{
-		  
-			// $config = array();
-
-			// $config['mailpath'] = '/usr/sbin/sendmail';
-			// $config['protocol']='smtp';
-			// $config['smtp_host']='email-smtp.eu-west-1.amazonaws.com';
-			// $config['smtp_port']='587';
-			// $config['smtp_timeout']='30';
-			// $config['smtp_user']='AKIAXRNTNANX64YFBHFJ';
-			// $config['smtp_pass']='BKoqJsfKLUpN2IiHnzhuFQEyX98hlHJ9Frg7QMvZDmco';
-			// $config['charset']='utf-8';
-			// $config['newline']="\r\n";
-			// $config['wordwrap'] = TRUE;
-			// $config['mailtype'] = 'html';
-
-	        // $this->load->library('email');
-
-	        // $this->email->initialize($config);
-
+		
 
 			require 'vendor/autoload.php';
-
-
-			$mail = new PHPMailer();
+			$mail = new PHPMailer(true);
 
 			try {
 
@@ -258,14 +240,16 @@ class Email_model extends CI_Model {
 			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
 			$mail->Username   = 'afrstaffrecognition@ke.ci.org';                   //SMTP username
 
-			$mail->Password   ='Comp@ss1on@321!!@**@';//$this->config->item('office365_smtp_pass');     
+			$mail->Password   =$this->config->item('office365_smtp_pass');     
 			                         //SMTP password
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
 			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 		
 			//Recipients
-			$mail->setFrom($this->from, $system_name);
+			//$mail->setFrom($this->from, $system_name);
+			$mail->setFrom($mail->Username, $system_name);
             $mail->addAddress($this->to);
+			//$mail->addAddress('londuso@ke.ci.org');
 
 			
 			//Content
@@ -273,17 +257,24 @@ class Email_model extends CI_Model {
 			$mail->Subject = $this->sub;
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		
+ 
 			$mail->send();
 
-			return "Mail Sent";
-			
-			// echo $this->$mail->print_debugger();
+			//$mail->print_debugger();
 			// exit();
 			
-		 } catch (Exception $e) {
-		 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-		 }
+		} catch (Exception $e) {
+			echo $e->getMessage();
+			$data=array(
+						'email_send_to'=>$e->getMessage(),
+					);
+	
+	
+						
+			
+					$this->db->insert('log_email_sent',$data);
+			
+		  }
 
 	}
 
@@ -298,3 +289,4 @@ class Email_model extends CI_Model {
 		return $str;
 	}
 }
+
