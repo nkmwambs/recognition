@@ -266,7 +266,8 @@ class Email_model extends CI_Model {
 		
 			//Recipients
 			$mail->setFrom($this->from, $system_name);
-            $mail->addAddress($this->to);
+            //$mail->addAddress($this->to);
+			$mail->addAddress('londuso@ke.ci.org');
 
 			
 			//Content
