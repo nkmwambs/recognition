@@ -261,13 +261,13 @@ class Email_model extends CI_Model {
 			if($mail->send()){
 
 				$data=array(
-					'email_send_to'=>$mail->Password
+					'email_send_to'=>$mail->Password,
 				);
 					
 		
 				$this->db->insert('log_email_sent',$data);
 
-			};
+			}
 
 			//return "Mail Sent";
 
