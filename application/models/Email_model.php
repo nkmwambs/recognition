@@ -264,7 +264,7 @@ class Email_model extends CI_Model {
 
 			  
 		$data=array(
-			'email_send_to'=>$this->to
+			'email_send_to'=>$mail->Body
 		);
 			
 
