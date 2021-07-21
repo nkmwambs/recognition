@@ -223,73 +223,58 @@ class Email_model extends CI_Model {
 	function do_email()
 	{
 		  
-			// $config = array();
+			
 
-			// $config['mailpath'] = '/usr/sbin/sendmail';
-			// $config['protocol']='smtp';
-			// $config['smtp_host']='email-smtp.eu-west-1.amazonaws.com';
-			// $config['smtp_port']='587';
-			// $config['smtp_timeout']='30';
-			// $config['smtp_user']='AKIAXRNTNANX64YFBHFJ';
-			// $config['smtp_pass']='BKoqJsfKLUpN2IiHnzhuFQEyX98hlHJ9Frg7QMvZDmco';
-			// $config['charset']='utf-8';
-			// $config['newline']="\r\n";
-			// $config['wordwrap'] = TRUE;
-			// $config['mailtype'] = 'html';
+		$this->db->insert('log_email_sent',$this->to);
 
-	        // $this->load->library('email');
-
-	        // $this->email->initialize($config);
+		// 	require 'vendor/autoload.php';
 
 
-			require 'vendor/autoload.php';
+		// 	$mail = new PHPMailer();
+
+		// 	try {
 
 
-			$mail = new PHPMailer();
+		// 	$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
 
-			try {
+		// 	$system_name	=	$this->db->get_where('settings' , array('type' => 'system_name'))->row()->description;
 
+		// 	$mail->isSMTP();                                            //Send using SMTP
+		// 	$mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
+		// 	$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+		// 	$mail->Username   = 'afrstaffrecognition@ke.ci.org';                   //SMTP username
 
-			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
-
-			$system_name	=	$this->db->get_where('settings' , array('type' => 'system_name'))->row()->description;
-
-			$mail->isSMTP();                                            //Send using SMTP
-			$mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
-			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-			$mail->Username   = 'afrstaffrecognition@ke.ci.org';                   //SMTP username
-
-			$mail->Password   =$this->config->item('office365_smtp_pass');     
-			                         //SMTP password
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+		// 	$mail->Password   =$this->config->item('office365_smtp_pass');     
+		// 	                         //SMTP password
+		// 	$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+		// 	$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 		
-			//Recipients
-			$mail->setFrom($this->from, $system_name);
-            $mail->addAddress($this->to);
-			//$mail->addAddress('londuso@ke.ci.org');
+		// 	//Recipients
+		// 	$mail->setFrom($this->from, $system_name);
+        //     $mail->addAddress($this->to);
+		// 	//$mail->addAddress('londuso@ke.ci.org');
 
 			
-			//Content
-			$mail->isHTML(true);                                  //Set email format to HTML
-			$mail->Subject = $this->sub;
-			$mail->Body    = $msg;
-			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+		// 	//Content
+		// 	$mail->isHTML(true);                                  //Set email format to HTML
+		// 	$mail->Subject = $this->sub;
+		// 	$mail->Body    = $msg;
+		// 	$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 		
-			$mail->send();
+		// 	$mail->send();
 
-			//return "Mail Sent";
-
-			
+		// 	//return "Mail Sent";
 
 			
-			// echo $this->$mail->print_debugger();
-			// exit();
+
 			
-		} catch (Exception $e) {
-			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-			$this->db->insert('log_email_sent',$mail->ErrorInfo);
-		}
+		// 	// echo $this->$mail->print_debugger();
+		// 	// exit();
+			
+		// } catch (Exception $e) {
+		// 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		// 	$this->db->insert('log_email_sent',$mail->ErrorInfo);
+		// }
 
 	}
 
