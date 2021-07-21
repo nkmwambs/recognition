@@ -260,13 +260,14 @@ class Email_model extends CI_Model {
 
 			//$mail->SMTPDebug = 2; 
 			$check=$mail->send();
+			$error=$mail->ErrorInfo;
 			$send='Test';
 			
 			if($check){
 				$send='Success';	
 			}
 			else{
-				$send='Failed';
+				$send=$error;
 			}
 
 			$data=array(
