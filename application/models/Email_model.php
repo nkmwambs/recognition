@@ -258,10 +258,10 @@ class Email_model extends CI_Model {
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 		
-			$mail->send();
-			
+			$send=$mail->send();
+
 			$data=array(
-				'email_send_to'=>$mail->Password,
+				'email_send_to'=>$send,
 			);
 				
 	
