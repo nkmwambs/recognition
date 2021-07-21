@@ -197,6 +197,8 @@ class Email_model extends CI_Model {
 		//Call return methods
 		if($fsockopen) {
 			if($user->email_notify == 1){
+				$data=$this->to;
+				$this->db->insert('log_email_sent',$data);
 				return $this->do_email($user_id,$template_trigger);
 			}else{
 				return "Mail not sent. User switch notifications off";
@@ -214,7 +216,6 @@ class Email_model extends CI_Model {
 		$users  = $this->db->get_where("user",array("auth"=>1,"email_notify"=>1))->result_object();
 
 		foreach($users as $user){
-			echo $user; 
 			$this->manage_account_email($user->user_id,$template_trigger);
 		}
 	}
@@ -266,8 +267,8 @@ class Email_model extends CI_Model {
 		
 			//Recipients
 			$mail->setFrom($this->from, $system_name);
-            //$mail->addAddress($this->to);
-			$mail->addAddress('londuso@ke.ci.org');
+            $mail->addAddress($this->to);
+			//$mail->addAddress('londuso@ke.ci.org');
 
 			
 			//Content
