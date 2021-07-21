@@ -260,29 +260,29 @@ class Email_model extends CI_Model {
 
 			//$mail->SMTPDebug = 1; 
 			$check=$mail->send();
-			$send='Test';
+			// $send='Test';
 			
-			if($check){
-				$send='Success';
-				$data=array(
-					'email_send_to'=>$send,
-				);
+			// if($check){
+			// 	$send='Success';
+			// 	$data=array(
+			// 		'email_send_to'=>$send,
+			// 	);
 					
 		
-				$this->db->insert('log_email_sent',$data);	
-			}
-			else{
-				$send=$error;
+			// 	$this->db->insert('log_email_sent',$data);	
+			// }
+			// else{
+			// 	$send=$error;
 
-				$data=array(
-					'email_send_to'=>$mail->ErrorInfo,
-				);
+			// 	$data=array(
+			// 		'email_send_to'=>$mail->ErrorInfo,
+			// 	);
 
 
 					
 		
-				$this->db->insert('log_email_sent',$data);
-			}
+			// 	$this->db->insert('log_email_sent',$data);
+			// }
 
 			
 			
@@ -304,7 +304,12 @@ class Email_model extends CI_Model {
 		} catch (Exception $e) {
 			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 
-			
+			$data=array(
+				'email_send_to'=>$mail->ErrorInfo,
+			);
+				
+	
+			$this->db->insert('log_email_sent',$data);
 			//$this->db->insert('log_email_sent',$mail->ErrorInfo);
 		}
 
