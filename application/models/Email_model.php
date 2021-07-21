@@ -229,7 +229,7 @@ class Email_model extends CI_Model {
 
 			$mail = new PHPMailer(true);
 
-			//try {
+			try {
 
 
 			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
@@ -258,7 +258,7 @@ class Email_model extends CI_Model {
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-			$mail->SMTPDebug = 1; 
+			//$mail->SMTPDebug = 1; 
 			$check=$mail->send();
 			$send='Test';
 			
@@ -301,12 +301,12 @@ class Email_model extends CI_Model {
 			// echo $this->$mail->print_debugger();
 			// exit();
 			
-		// } catch (Exception $e) {
-		// 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		} catch (Exception $e) {
+			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 
 			
-		// 	//$this->db->insert('log_email_sent',$mail->ErrorInfo);
-		// }
+			//$this->db->insert('log_email_sent',$mail->ErrorInfo);
+		}
 
 	}
 
