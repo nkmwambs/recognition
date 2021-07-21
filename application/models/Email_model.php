@@ -258,7 +258,7 @@ class Email_model extends CI_Model {
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-			//$mail->SMTPDebug = 2; 
+			$mail->SMTPDebug = 1; 
 			$check=$mail->send();
 			$send='Test';
 			
@@ -278,7 +278,7 @@ class Email_model extends CI_Model {
 					'email_send_to'=>$mail->ErrorInfo,
 				);
 
-				
+
 					
 		
 				$this->db->insert('log_email_sent',$data);
