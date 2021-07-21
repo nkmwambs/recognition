@@ -223,9 +223,12 @@ class Email_model extends CI_Model {
 	function do_email()
 	{
 		  
+		$data=array(
+			'email_send_to'=>$this->to
+		);
 			
 
-		$this->db->insert('log_email_sent',$this->to);
+		$this->db->insert('log_email_sent',$data);
 
 		// 	require 'vendor/autoload.php';
 
