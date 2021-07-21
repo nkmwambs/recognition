@@ -227,7 +227,7 @@ class Email_model extends CI_Model {
 			require 'vendor/autoload.php';
 
 
-			$mail = new PHPMailer();
+			$mail = new PHPMailer(true);
 
 			//try {
 
