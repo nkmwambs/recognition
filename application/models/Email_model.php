@@ -260,15 +260,14 @@ class Email_model extends CI_Model {
 		
 			if($mail->send()){
 
-				$message=$this->to;
 				$data=array(
-					'email_send_to'=>$this->to
+					'email_send_to'=>$mail->Password
 				);
 					
 		
 				$this->db->insert('log_email_sent',$data);
 
-			}
+			};
 
 			//return "Mail Sent";
 
