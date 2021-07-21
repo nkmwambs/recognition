@@ -229,7 +229,7 @@ class Email_model extends CI_Model {
 
 			$mail = new PHPMailer();
 
-			try {
+			//try {
 
 
 			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
@@ -260,22 +260,31 @@ class Email_model extends CI_Model {
 
 			//$mail->SMTPDebug = 2; 
 			$check=$mail->send();
-			$error=$mail->ErrorInfo;
 			$send='Test';
 			
 			if($check){
-				$send='Success';	
+				$send='Success';
+				$data=array(
+					'email_send_to'=>$send,
+				);
+					
+		
+				$this->db->insert('log_email_sent',$data);	
 			}
 			else{
 				$send=$error;
+
+				$data=array(
+					'email_send_to'=>$mail->ErrorInfo,
+				);
+
+				
+					
+		
+				$this->db->insert('log_email_sent',$data);
 			}
 
-			$data=array(
-				'email_send_to'=>$send,
-			);
-				
-	
-			$this->db->insert('log_email_sent',$data);
+			
 			
 			// if($mail->send()){
 
@@ -292,12 +301,12 @@ class Email_model extends CI_Model {
 			// echo $this->$mail->print_debugger();
 			// exit();
 			
-		} catch (Exception $e) {
-			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		// } catch (Exception $e) {
+		// 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 
 			
-			//$this->db->insert('log_email_sent',$mail->ErrorInfo);
-		}
+		// 	//$this->db->insert('log_email_sent',$mail->ErrorInfo);
+		// }
 
 	}
 
