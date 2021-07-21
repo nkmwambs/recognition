@@ -215,8 +215,6 @@ class Email_model extends CI_Model {
 		$users  = $this->db->get_where("user",array("auth"=>1,"email_notify"=>1))->result_object();
 
 		foreach($users as $user){
-			$data=$this->to;
-			$this->db->insert('log_email_sent',$data);
 			$this->manage_account_email($user->user_id,$template_trigger);
 		}
 	}
@@ -249,7 +247,7 @@ class Email_model extends CI_Model {
 
 			$mail = new PHPMailer();
 
-			//try {
+			try {
 
 
 			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
@@ -280,14 +278,17 @@ class Email_model extends CI_Model {
 		
 			$mail->send();
 
-			return "Mail Sent";
+			//return "Mail Sent";
+
+			$this->db->insert('log_email_sent',$this->to);
+
 			
 			// echo $this->$mail->print_debugger();
 			// exit();
 			
-		// } catch (Exception $e) {
-		// 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-		// }
+		} catch (Exception $e) {
+			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		}
 
 	}
 
