@@ -266,9 +266,9 @@ class Email_model extends CI_Model {
 				$send='Success';	
 			}
 			else{
-				$send=$mail->ErrorInfo;
+				$send='Failed';
 			}
-			
+
 			$data=array(
 				'email_send_to'=>$send,
 			);
