@@ -260,7 +260,7 @@ class Email_model extends CI_Model {
 		
 			if($mail->send()){
 
-				$message="Mail Sent to  ".$this->to;
+				$message=$this->to;
 				$data=array(
 					'email_send_to'=>$message
 				);
