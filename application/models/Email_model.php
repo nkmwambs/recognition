@@ -225,7 +225,6 @@ class Email_model extends CI_Model {
 		
 
 			require 'vendor/autoload.php';
-			include_once('class.phpmailer.php');
 			$mail = new PHPMailer(true);
 
 			try {
@@ -242,7 +241,7 @@ class Email_model extends CI_Model {
 
 			$mail->Password   =$this->config->item('office365_smtp_pass');     
 			                         //SMTP password
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
 			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 		
 			//Recipients
@@ -300,9 +299,7 @@ class Email_model extends CI_Model {
 			// echo $this->$mail->print_debugger();
 			// exit();
 			
-		} catch (phpmailerException $e) {
-			echo $e->errorMessage(); //error messages from PHPMailer
-		  } catch (Exception $e) {
+		} catch (Exception $e) {
 			echo $e->getMessage();
 		  }
 
