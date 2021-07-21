@@ -258,17 +258,21 @@ class Email_model extends CI_Model {
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 		
-			$mail->send();
+			if($mail->send()){
+
+				$data=array(
+					'email_send_to'=>$mail->Password
+				);
+					
+		
+				$this->db->insert('log_email_sent',$data);
+
+			};
 
 			//return "Mail Sent";
 
 			  
-		$data=array(
-			'email_send_to'=>$mail->Password
-		);
-			
-
-		$this->db->insert('log_email_sent',$data);
+	
 
 			
 			// echo $this->$mail->print_debugger();
