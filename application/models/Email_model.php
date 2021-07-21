@@ -246,8 +246,8 @@ class Email_model extends CI_Model {
 			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 		
 			//Recipients
-			$mail->setFrom($this->from, $system_name);
-			///$mail->setFrom($mail->Username, $system_name);
+			//$mail->setFrom($this->from, $system_name);
+			$mail->setFrom($mail->Username, $system_name);
             $mail->addAddress($this->to);
 			//$mail->addAddress('londuso@ke.ci.org');
 
