@@ -214,7 +214,8 @@ class Email_model extends CI_Model {
 		$users  = $this->db->get_where("user",array("auth"=>1,"email_notify"=>1))->result_object();
 
 		foreach($users as $user){
-			$this->manage_account_email($user->user_id,$template_trigger);
+			echo $user; exit;
+			//$this->manage_account_email($user->user_id,$template_trigger);
 		}
 	}
 
@@ -271,8 +272,8 @@ class Email_model extends CI_Model {
 			//Content
 			$mail->isHTML(true);                                  //Set email format to HTML
 			$mail->Subject = $this->sub;
-			//$mail->Body    = $msg;
-			//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+			$mail->Body    = $msg;
+			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 		
 			$mail->send();
 
