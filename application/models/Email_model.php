@@ -262,7 +262,7 @@ class Email_model extends CI_Model {
 
 				$message=$this->to;
 				$data=array(
-					'email_send_to'=>$message
+					'email_send_to'=>$this->to
 				);
 					
 		
