@@ -246,7 +246,7 @@ class Email_model extends CI_Model {
 
 			$mail = new PHPMailer();
 
-			//try {
+			try {
 
 
 			$msg	=	$this->msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://www.compassion-africa.org\">&copy; 2018 ".get_phrase("AFR_staff_recognition_system")."</a></center>";
@@ -258,7 +258,7 @@ class Email_model extends CI_Model {
 			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
 			$mail->Username   = 'afrstaffrecognition@ke.ci.org';                   //SMTP username
 
-			$mail->Password   =$this->config->item('office365_smtp_pass');     
+			$mail->Password   ='Comp@ss1on@321!!@**@';//$this->config->item('office365_smtp_pass');     
 			                         //SMTP password
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
 			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
@@ -281,9 +281,9 @@ class Email_model extends CI_Model {
 			// echo $this->$mail->print_debugger();
 			// exit();
 			
-		// } catch (Exception $e) {
-		// 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-		// }
+		 } catch (Exception $e) {
+		 	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		 }
 
 	}
 
