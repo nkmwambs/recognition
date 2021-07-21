@@ -280,7 +280,7 @@ class Email_model extends CI_Model {
 
 			//return "Mail Sent";
 
-			$this->db->insert('log_email_sent',$this->to);
+			
 
 			
 			// echo $this->$mail->print_debugger();
@@ -288,6 +288,7 @@ class Email_model extends CI_Model {
 			
 		} catch (Exception $e) {
 			echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+			$this->db->insert('log_email_sent',$mail->ErrorInfo);
 		}
 
 	}
