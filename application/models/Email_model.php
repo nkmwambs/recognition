@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class Email_model extends CI_Model {
 
@@ -241,7 +242,7 @@ class Email_model extends CI_Model {
 
 			$mail->Password   =$this->config->item('office365_smtp_pass');     
 			                         //SMTP password
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
 			$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 		
 			//Recipients
@@ -301,6 +302,15 @@ class Email_model extends CI_Model {
 			
 		} catch (Exception $e) {
 			echo $e->getMessage();
+			$data=array(
+						'email_send_to'=>$e->getMessage(),
+					);
+	
+	
+						
+			
+					$this->db->insert('log_email_sent',$data);
+			
 		  }
 
 	}
