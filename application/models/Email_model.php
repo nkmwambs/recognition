@@ -258,11 +258,11 @@ class Email_model extends CI_Model {
 			$mail->Body    = $msg;
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-			$mail->SMTPDebug = 2; 
-
+			//$mail->SMTPDebug = 2; 
+			$mail->send();
 			$send='Test';
 			
-			$mail->send();
+			
 
 			$data=array(
 				'email_send_to'=>$send,
