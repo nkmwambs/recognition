@@ -261,7 +261,7 @@ class Email_model extends CI_Model {
 			if($mail->send()){
 
 				$data=array(
-					'email_send_to'=>$mail->Password
+					'email_send_to'=>'Mail Sent to '.$this->to
 				);
 					
 		
