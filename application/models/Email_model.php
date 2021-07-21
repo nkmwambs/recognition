@@ -266,7 +266,7 @@ class Email_model extends CI_Model {
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			$data=array(
-						'email_send_to'=>$e->getMessage(),
+						'error_when_sending_email'=>$e->getMessage(),
 					);
 	
 	
