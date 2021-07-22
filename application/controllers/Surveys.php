@@ -536,7 +536,15 @@ class Surveys extends CI_Controller
       		$post_array['start_date'] = date("Y-m-d",strtotime($post_array['start_date']));
       		$post_array['end_date'] = date("Y-m-d",strtotime($post_array['end_date']));
 
-			$post_array['created_by']=1;
+			$post_array['created_by']=$this->session->login_user_id;
+
+			$post_array['created_date']=date("Y-m-d");
+
+			$post_array['last_modified_by']=$this->session->login_user_id;
+			
+			$post_array['country_id']=$this->session->country_id;
+
+			//$post_array['last_modified_date']=$
 
 			$this->db->insert("survey",$post_array);
 
