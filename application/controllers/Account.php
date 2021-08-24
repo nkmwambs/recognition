@@ -257,7 +257,7 @@ class Account extends CI_Controller
 		$post_array['created_date'] = date('Y-m-d h:i:s');
 		$post_array['last_modified_by'] = $this->session->login_user_id;
 
-		$this->db->where(array("category_id"=>$primary_key));
+		$this->db->where(array("department_id"=>$primary_key));
 		$this->db->update("department",$post_array);
 
 		return true;
@@ -267,7 +267,7 @@ class Account extends CI_Controller
 
 		$data['last_modified_by'] = $this->session->login_user_id;
 
-		$this->db->update('department',$data,array('category_id' =>$primary_key));
+		$this->db->update('department',$data,array('department_id' =>$primary_key));
 
 		return true;
 	}
@@ -401,7 +401,7 @@ public function insert_role_audit_parameters($post_array,$primary_key){
 		$post_array['created_date'] = date('Y-m-d h:i:s');
 		$post_array['last_modified_by'] = $this->session->login_user_id;
 
-		$this->db->where(array("category_id"=>$primary_key));
+		$this->db->where(array("role_id"=>$primary_key));
 		$this->db->update("role",$post_array);
 
 		return true;
@@ -411,7 +411,7 @@ public function insert_role_audit_parameters($post_array,$primary_key){
 
 		$data['last_modified_by'] = $this->session->login_user_id;
 
-		$this->db->update('role',$data,array('category_id' =>$primary_key));
+		$this->db->update('role',$data,array('role_id' =>$primary_key));
 
 		return true;
 	}
