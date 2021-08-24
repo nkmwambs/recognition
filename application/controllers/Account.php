@@ -322,7 +322,8 @@ class Account extends CI_Controller
             redirect(base_url() . 'login', 'refresh');
 
 
-			/**Instatiate CRUD**/
+		try {
+				/**Instatiate CRUD**/
 		$crud = new grocery_CRUD();
 
 		/**Set theme to flexigrid**/
@@ -369,6 +370,11 @@ class Account extends CI_Controller
 		if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"edit_role")) $crud->unset_edit();
 		if(!$this->crud_model->check_profile_privilege($this->session->profile_id,"delete_role")) $crud->unset_delete();
 
+
+		} catch (Exception $e) {
+			show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
+		}
+		
 		//$crud->add_action('More', '', 'demo/action_more','ui-icon-plus');
 
 		$output = $crud->render();
