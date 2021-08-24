@@ -183,7 +183,7 @@
 		
 		       // Load data for the table's content from an Ajax source
 		       "ajax": {
-		           "url": "<?php echo base_url();?>Account/ajax_list",
+		           "url": "<?php echo base_url();?>account/ajax_list",
 		           "type": "POST",
 		           "data": function(data){
 		           		var x = $("#form-filter").serializeArray();
