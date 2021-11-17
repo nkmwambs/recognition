@@ -542,7 +542,7 @@ class Surveys extends CI_Controller
 
 			$post_array['last_modified_by']=$this->session->login_user_id;
 			
-			$post_array['country_id']=$this->session->country_id;
+			$post_array['country_id']=1;//$this->session->country_id;
 
 			//$post_array['last_modified_date']=$
 
