@@ -3,5 +3,6 @@
 /application/**/config.php
 /application/**/database.php
 /application/**/sso.php
+/application/logs/*
 vendor
 index.php
